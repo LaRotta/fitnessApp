@@ -1,5 +1,5 @@
 const express = require("express");
-const mongojs = require("mongojs");
+const mongoose = require("mongoose");
 
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
@@ -10,7 +10,7 @@ const app = express();
 
 
 //you need this to be able to process information sent to a POST route
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
@@ -22,15 +22,13 @@ app.use(bodyParser.json());
 
 
 // Database configuration
-// Save the URL of our database as well as the name of our collection
-const databaseUrl = "fitness_db";
-const collections = ["profiles"];
 
-// Use mongojs to hook the database to the db variable
-const db = mongojs(databaseUrl, collections);
+mongoose.connect('mongodb://localhost/fitness_db');
 
-// This makes sure that any errors are logged if mongodb runs into an issue
-db.on("error", (error) => console.log("Database Error:", error));
+const db = mongoose.connection;
+
+db.then(() => console.log("MongoDB Connected!"))
+    .catch(err => console.log(err));
 
 
 
