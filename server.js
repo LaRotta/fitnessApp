@@ -27,7 +27,7 @@ mongoose.connect('mongodb://localhost/fitness_db');
 
 const db = mongoose.connection;
 
-db.then(() => console.log("MongoDB Connected!"))
+db.then(() => console.log("Yeeeeah Buddy...MongoDB Connected!"))
     .catch(err => console.log(err));
 
 
