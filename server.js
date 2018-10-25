@@ -1,13 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const passport = require("passport");
 
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
 
-
 const app = express();
-
 
 //you need this to be able to process information sent to a POST route
 const bodyParser = require('body-parser');
@@ -30,11 +29,13 @@ const db = mongoose.connection;
 db.then(() => console.log("Yeeeeah Buddy...MongoDB Connected!"))
     .catch(err => console.log(err));
 
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require("./config/passport")(passport);
 
 
-// test route
-
-app.get("/", (req, res) => res.send("hello"));
 
 // USE ROUTES
 app.use("/api/users", users);
